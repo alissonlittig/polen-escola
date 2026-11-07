@@ -72,7 +72,7 @@ export function summary(s: State, today: string) {
   return {
     students: active.size, received, expected, lateCount: late.length, lateTotal: late.reduce((a, i) => a + i.amount, 0),
     occupancy: seats ? taken / seats : 0, series,
-    delinquency: expected ? mInv.filter((i) => statusOf(i, today) === 'atrasada').reduce((a, i) => a + i.amount, 0) / expected : 0,
+    delinquency: expected ? late.reduce((a, i) => a + i.amount, 0) / expected : 0,
   };
 }
 

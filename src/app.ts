@@ -92,7 +92,7 @@ class PolenApp extends LitElement {
       <section class="kpis">
         <article class="kpi"><span>Alunos ativos</span><b>${m.students}</b><em>${this.s.enrollments.filter((e) => e.active).length} matrículas</em></article>
         <article class="kpi"><span>Recebido no mês</span><b>${brl(m.received)}</b><em>de ${brl(m.expected)} previstos</em></article>
-        <article class="kpi warn"><span>Em atraso</span><b>${brl(m.lateTotal)}</b><em>${m.lateCount} mensalidades · ${(m.delinquency * 100).toFixed(0)}% do mês</em></article>
+        <article class="kpi warn"><span>Em atraso</span><b>${brl(m.lateTotal)}</b><em>${m.lateCount} mensalidades · ${(m.delinquency * 100).toFixed(0)}% do esperado no mês</em></article>
         <article class="kpi"><span>Ocupação das turmas</span><b>${Math.round(m.occupancy * 100)}%</b><em>${this.s.classes.length} turmas abertas</em></article>
       </section>
       <section class="grid2">
@@ -108,7 +108,7 @@ class PolenApp extends LitElement {
         </article>
         <article class="card wide">
           <h2>Ocupação por turma</h2>
-          <ul class="occ">${this.s.classes.map((k) => { const n = seatsTaken(this.s, k.id); const p = n / k.capacity; return html`<li><span class="sw" style="background:${this.course(k.courseId).hue}"></span><div class="grow"><b>${k.label}</b><small>${k.day} · ${k.time}</small></div><div class="meter" aria-hidden="true"><i style="width:${p * 100}%"></i></div><span class="num ${p >= 1 ? 'full' : ''}">${p >= 1 ? 'Lotada' : `${k.capacity - n} vagas`}</span></li>`; })}</ul>
+          <ul class="occ">${this.s.classes.map((k) => { const n = seatsTaken(this.s, k.id); const p = n / k.capacity; return html`<li><span class="sw" style="background:${this.course(k.courseId).hue}"></span><div class="grow"><b>${k.label}</b><small>${k.day} · ${k.time}</small></div><div class="meter" aria-hidden="true"><i style="width:${p * 100}%"></i></div><span class="num ${p >= 1 ? 'full' : ''}">${p >= 1 ? 'Lotada' : (k.capacity - n === 1 ? '1 vaga' : `${k.capacity - n} vagas`)}</span></li>`; })}</ul>
         </article>
       </section>`;
   }
